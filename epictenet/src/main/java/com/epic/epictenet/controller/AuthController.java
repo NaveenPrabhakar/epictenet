@@ -17,6 +17,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 
 @RestController
 @CrossOrigin
+
+
 public class AuthController {
 
     @Autowired

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epic.epictenet.exception.DataNotFoundException;
@@ -22,6 +23,7 @@ import com.epic.epictenet.repo.LikeRepository;
 import com.epic.epictenet.repo.PostRepository;
 
 @RestController
+
 public class PostController {
 	
 	@Autowired
