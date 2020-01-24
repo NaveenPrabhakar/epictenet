@@ -55,33 +55,25 @@ public class PostController {
 		post.setLikeCounts(likeRepository.countByPostId(postId));
 		return post;
 		}else {
-			throw new DataNotFoundException("PostId " + postId + " not found");
+			throw new DataNotFoundException();
 		}
 		
 	 }
 	
 	@PutMapping("/post/{postid}")
-	public Post updatePost(@PathVariable Long postId, @Valid @RequestBody Post postReq) {
-		if(postRepository.existsById(postId)) {
-	Post post = postRepository.findById(postId).get();
+	public Post updatePost(@PathVariable int postId, @Valid @RequestBody Post postReq) {
+		
+	Post post = postRepository.getUndoData(postId);
 	post.setTitle(postReq.getTitle());
 	post.setContent(postReq.getContent());
 	post.setDescription(postReq.getDescription());
+	post.setActive(postReq.getActive());
 	return postRepository.save(post);
-		}
-		else {
-			throw new DataNotFoundException("PostId " + postId + " not found");
-			
-	}
+		
 	}
 	
 	
-	@DeleteMapping("/post/{postId}")
-	public ResponseEntity<?> deletePost(@PathVariable Long postId){
-		Optional<Post> post = postRepository.findById(postId);
-		postRepository.deleteById(postId);
-		return ResponseEntity.ok().build();
-	}
+	
 	
 	
 

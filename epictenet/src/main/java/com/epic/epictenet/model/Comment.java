@@ -11,9 +11,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 
 @Entity
+@Where(clause="is_active=1")
 public class Comment  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +43,20 @@ public class Comment  {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "modify_date")
     private Date modifyDate;
+    
+    @JsonProperty
+    @Column(name="is_active")
+    private Boolean active;
 
-    public Long getId() {
+    public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Long getId() {
         return id;
     }
 

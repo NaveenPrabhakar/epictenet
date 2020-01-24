@@ -1,10 +1,16 @@
 package com.epic.epictenet.model;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
+@Where(clause="is_active=1")
 public class User {
 
     @Id
@@ -14,6 +20,10 @@ public class User {
     private String username;
     private String password;
     private String fullname;
+    
+    @JsonProperty
+    @Column(name="is_active",columnDefinition="tinyint(1) default 1")
+    private Boolean active;
 
     public User() {
     }

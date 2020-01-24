@@ -6,6 +6,7 @@ import javax.persistence.PostRemove;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,14 +36,32 @@ public class LikeController {
 	public List<Lyke> getAllComments(@PathVariable (value = "postId") Long postId){
 		
 		return likeRepository.findByPostId(postId);
-		
 	}
+	
 	@PostMapping("/post/{postId}/like")
 	public  Lyke createComment(@PathVariable (value = "postId") Long postId,@Valid @RequestBody Lyke like){
 		Post post = postRepository.findById(postId).get();
 		like.setPost(post);
 		return likeRepository.save(like);
 	}
+	
+	@PutMapping("/like/del/{likeId}")
+	public Lyke deleteLike(@PathVariable (value = "likeId") int likeId) {
+		
+		Lyke like  = likeRepository.findById(likeId).get();
+		like.setActive(false);
+		return likeRepository.save(like);
+	}
+	
+	@PutMapping("/like/undo/{likeId}")
+	public Lyke undoLike(@PathVariable (value = "likeId") int likeId) {
+		
+		Lyke like  = likeRepository.getUndoData(likeId);
+		like.setActive(true);
+		return likeRepository.save(like);
+	}
+	
+	
 	
 	
 

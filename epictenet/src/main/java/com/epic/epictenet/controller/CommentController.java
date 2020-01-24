@@ -6,6 +6,7 @@ import javax.persistence.PostRemove;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,21 +46,31 @@ public class CommentController {
 	@PutMapping("/post/{postId}/comments/{commentId}")
 	public Comment updateComment(@PathVariable (value = "postId") Long postId,
             @PathVariable (value = "commentId") Long commentId,
-            @Valid @RequestBody Comment ReqComment) {
+            @Valid @RequestBody Comment reqComment) {
 		
 		if(postRepository.existsById(postId)) {
 			
 			Comment comment = commentRepository.findById(commentId).get();
-			comment.setText(ReqComment.getText());
+			comment.setText(reqComment.getText());
+			comment.setActive(reqComment.getActive());
 			return commentRepository.save(comment);
 			
            
         }else {
-        	 throw new DataNotFoundException("PostId " + postId + " not found");
+        	 throw new DataNotFoundException();
         }
 		
 	
 		
+	}
+	
+	
+	
+	@PutMapping("/comments/undo/{commentId}")
+	public  Comment undoComment(@PathVariable (value = "commentId") int commentId){
+		 Comment comment = commentRepository.getUndoData(commentId);
+		 comment.setActive(true);
+		return commentRepository.save(comment);
 	}
 
 }

@@ -25,9 +25,10 @@ public class UserController {
 	public User createUser(@RequestBody User user)
 	{
 	        if (userRepository.existsByUsername(user.getUsername())){
-	            throw new DataNotFoundException("Username already existed");
+	            throw new DataNotFoundException();
 	        }
-	        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+	        String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword()); 
+	        user.setPassword(encodedPassword);
 		return userRepository.save(user);
 	}
 	

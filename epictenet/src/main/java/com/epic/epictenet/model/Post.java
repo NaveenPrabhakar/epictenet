@@ -10,9 +10,13 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
+@Where(clause="is_active=1")
 public class Post  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +47,19 @@ public class Post  {
     @Column(name = "modify_date")
     private Date modifyDate;
     
-    @Transient
+    @JsonProperty
+    @Column(name="is_active")
+    private Boolean active;
+    
+    public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	@Transient
     private Long likeCounts;
     
     @Transient
