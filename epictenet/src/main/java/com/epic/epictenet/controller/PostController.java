@@ -48,6 +48,11 @@ public class PostController {
 		return postRepository.save(post);
 		
 	}
+	@PostMapping("/postAll")
+	public List<Post> postAll(@Valid @RequestBody List<Post> post){
+		
+		return postRepository.saveAll(post);
+	}
 	
 	@GetMapping("/post/{postId}/count")
 	public Post getCounts(@PathVariable Long postId){

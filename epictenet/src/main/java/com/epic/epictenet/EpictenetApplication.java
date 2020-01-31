@@ -22,6 +22,8 @@ public class EpictenetApplication {
 		SpringApplication.run(EpictenetApplication.class, args);
 	}
 	
+	
+	
 	@Bean
 	public Docket swaggerConfigeration(){
 		
